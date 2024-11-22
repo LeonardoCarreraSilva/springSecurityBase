@@ -1,6 +1,9 @@
 package com.example.springSecurityBase.entities
 
+import com.example.springSecurityBase.dto.LoginRequest
 import jakarta.persistence.*
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.UUID
 
 @Entity
@@ -20,4 +23,8 @@ data class User (
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     )
     val roles:Set<Role>
-)
+) {
+    fun isLoginCorrect(loginRequest: LoginRequest, passwordEncoder: PasswordEncoder): Boolean {
+        return passwordEncoder.matches(loginRequest.password, this.password)
+    }
+}

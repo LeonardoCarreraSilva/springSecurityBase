@@ -11,6 +11,8 @@ data class Tweet(
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "tweet_id")
     val id: Long,
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     val user: User,
     val content: String,
     @CreationTimestamp
